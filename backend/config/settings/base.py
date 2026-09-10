@@ -12,14 +12,17 @@ INSTALLED_APPS = [
     'django.contrib.auth',
     'django.contrib.contenttypes',
     'rest_framework',
+    'apps.users',
+    'apps.transactions',
 ]
 MIDDLEWARE = [
     'django.middleware.security.SecurityMiddleware',
     'django.middleware.common.CommonMiddleware',
+    'common.middleware.JWTAuthenticationMiddleware',
 ]
 ROOT_URLCONF = 'config.urls'
 WSGI_APPLICATION = 'config.wsgi.application'
-DATABASES = {} # Using PyMongo directly, Django ORM bypassed for core domain
+DATABASES = {} 
 LANGUAGE_CODE = 'en-us'
 TIME_ZONE = 'UTC'
 USE_TZ = True
