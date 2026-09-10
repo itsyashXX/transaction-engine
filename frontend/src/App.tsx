@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react';
+import { useEffect, useState } from 'react';
 import { Activity, ShieldCheck, Database } from 'lucide-react';
 
 function App() {
