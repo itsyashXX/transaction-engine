@@ -1,5 +1,5 @@
 export const apiClient = {
-    async login(username, password) {
+    async login(username: string, password: string) {
         const res = await fetch('/api/auth/login', {
             method: 'POST',
             headers: { 'Content-Type': 'application/json' },
@@ -9,7 +9,7 @@ export const apiClient = {
         return res.json();
     },
     
-    async requestTransaction(token, operation, amount_minor, idempotency_key) {
+    async requestTransaction(token: string, operation: string, amount_minor: number, idempotency_key: string) {
         const res = await fetch('/api/transactions', {
             method: 'POST',
             headers: {
