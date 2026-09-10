@@ -1,3 +1,36 @@
+#!/bin/bash
+set -e
+
+echo "Creating UI API client..."
+cat << 'API' > frontend/src/api/client.ts
+export const apiClient = {
+    async login(username, password) {
+        const res = await fetch('/api/auth/login', {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify({ username, password })
+        });
+        if (!res.ok) throw new Error(await res.text());
+        return res.json();
+    },
+    
+    async requestTransaction(token, operation, amount_minor, idempotency_key) {
+        const res = await fetch('/api/transactions', {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json',
+                'Authorization': `Bearer ${token}`
+            },
+            body: JSON.stringify({ operation, amount_minor, idempotency_key })
+        });
+        if (!res.ok) throw new Error(await res.text());
+        return res.json();
+    }
+}
+API
+
+echo "Updating App to include Transaction Lab UI..."
+cat << 'APP' > frontend/src/App.tsx
 import { useEffect, useState } from 'react';
 import { Activity, ShieldCheck, Database, Send, AlertTriangle } from 'lucide-react';
 import { apiClient } from './api/client';
@@ -134,3 +167,6 @@ function App() {
 }
 
 export default App;
+APP
+
+echo "Done."
